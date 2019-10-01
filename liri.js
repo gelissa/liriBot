@@ -18,8 +18,13 @@ function spotifyThis(input) {
     spotify
         .search({ type: 'track', query: userInput, limit: 2 })
         .then(function (response) {
-            console.log(response.data)
-            console.log(JSON.stringify(response.tracks.items[0].artists[0].name, null, 2));
+            // console.log(response.data)
+            console.log("===================================" + "\n");
+            console.log("ARTIST: " + response.tracks.items[0].artists[0].name + "\n");
+            console.log("SONG: " + response.tracks.items[0].name + "\n");
+            console.log("LINK: " + response.tracks.items[0].external_urls.spotify + "\n");
+            console.log("ALBUM: " + response.tracks.items[0].album.name + "\n");
+            console.log("===================================" + "\n");
         })
         .catch(function (err) {
             console.log(err);
@@ -33,9 +38,9 @@ function concertThis(input) {
         .then(function (response) {
             // handle success
             var concert = response.data
-            console.log("Venue: " + concert[0].venue.name);
-            console.log("Venue Location: " + concert[0].venue.city);
-            console.log("Venue: " + concert[0].datetime);
+            console.log("VENUE: " + concert[0].venue.name);
+            console.log("VENUE LOCATION: " + concert[0].venue.city);
+            console.log("VENUE: " + concert[0].datetime);
         })
         .catch(function (error) {
             // handle error
