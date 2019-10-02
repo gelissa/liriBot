@@ -19,7 +19,7 @@ Using these, she performs API calls and outputs them to the terminal.
 Here is the link to my [github](https://github.com/gelissa/liriBot) so you can see the code that makes her work. 
 
 ## Video
-This is a video showing the [liriBot]() in action
+This is a video showing the [liriBot](https://drive.google.com/file/d/1Fiy-bOEEcFxzyCJ-9sADlxaI1abw602L/view?usp=sharing) in action
 
 ## Portfolio
-Find all my portfolio [here]()
+Find all my portfolio [here](https://gelissa.github.io/gelissaPortfolio/)
