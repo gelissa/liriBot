@@ -15,20 +15,31 @@ var userInput = process.argv.slice(3).join(" ");
 
 // making a function that will search thru the spotify api
 function spotifyThis(input) {
+    if (!userInput){
+        userInput = "The Sign Ace of Base";
+    };
     spotify
-        .search({ type: 'track', query: userInput, limit: 2 })
+        // how do i get more than one reference?
+        .search({ type: 'track', query: userInput, limit: 10 })
         .then(function (response) {
-            // console.log(response.data)
-            console.log("===================================" + "\n");
-            console.log("ARTIST: " + response.tracks.items[0].artists[0].name + "\n");
-            console.log("SONG: " + response.tracks.items[0].name + "\n");
-            console.log("LINK: " + response.tracks.items[0].external_urls.spotify + "\n");
-            console.log("ALBUM: " + response.tracks.items[0].album.name + "\n");
-            console.log("===================================" + "\n");
+            for (i = 0; i <= 9; i++) {
+                console.log("===================================" + "\n");
+                console.log("ARTIST: " + response.tracks.items[i].artists[0].name + "\n");
+                console.log("SONG: " + response.tracks.items[i].name + "\n");
+                console.log("LINK: " + response.tracks.items[i].external_urls.spotify + "\n");
+                console.log("ALBUM: " + response.tracks.items[i].album.name + "\n");
+                console.log("===================================" + "\n");
+            }
         })
+
         .catch(function (err) {
             console.log(err);
         });
+
+        // fs.appendFile("log.txt", actorData + divider, function (err) {
+        //     if (err) throw err;
+        //     console.log(actorData);
+        //   });
 }
 
 function concertThis(input) {
@@ -37,10 +48,15 @@ function concertThis(input) {
         .get(queryURL)
         .then(function (response) {
             // handle success
-            var concert = response.data
-            console.log("VENUE: " + concert[0].venue.name);
-            console.log("VENUE LOCATION: " + concert[0].venue.city);
-            console.log("VENUE: " + concert[0].datetime);
+            for (i = 0; i <= 9; i++) {
+                var concert = response.data
+                // console.log(concert);
+                console.log("===================================" + "\n");
+                console.log("VENUE: " + concert[i].venue.name + "\n");
+                console.log("VENUE LOCATION: " + concert[i].venue.city + "\n");
+                console.log("VENUE: " + concert[i].datetime + "\n");
+                console.log("===================================" + "\n");
+            }
         })
         .catch(function (error) {
             // handle error
@@ -50,38 +66,49 @@ function concertThis(input) {
 }
 
 function movieThis(input) {
+    if (!userInput){
+        userInput = "Mr. Nobody";
+    };
     var queryURL = "http://www.omdbapi.com/?apikey=trilogy&t=" + userInput;
-    
-    console.log(queryURL);
-    axios
-    .get(queryURL)
-    .then(function (response) {
-        // handle success
-        var movie = response.data
-        console.log("===================================" + "\n");
-        console.log("TITLE: " + movie.Title + "\n");
-        console.log("RELEASE DATE: " + movie.Year + "\n");
-        console.log("IMDB RATING: " + movie.Ratings[0].Value + "\n");
-        console.log("ROTTEN TOMATOES RATING: " + movie.Ratings[1].Value + "\n");
-        console.log("COUNTRY: " + movie.Country + "\n");
-        console.log("LANGUAGE: " + movie.Language + "\n");
-        console.log("PLOT: " + movie.Plot + "\n");
-        console.log("ACTORS: " + movie.Actors + "\n");
-        console.log("===================================");
-        // console.log(JSON.stringify(response.venue, null, 2));
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
 
+    // console.log(queryURL);
+    axios
+        .get(queryURL)
+        .then(function (response) {
+            // handle success
+            var movie = response.data
+            console.log("===================================" + "\n");
+            console.log("TITLE: " + movie.Title + "\n");
+            console.log("RELEASE DATE: " + movie.Year + "\n");
+            console.log("IMDB RATING: " + movie.Ratings[0].Value + "\n");
+            console.log("ROTTEN TOMATOES RATING: " + movie.Ratings[1].Value + "\n");
+            console.log("COUNTRY: " + movie.Country + "\n");
+            console.log("LANGUAGE: " + movie.Language + "\n");
+            console.log("PLOT: " + movie.Plot + "\n");
+            console.log("ACTORS: " + movie.Actors + "\n");
+            console.log("===================================");
+            // console.log(JSON.stringify(response.venue, null, 2));
+
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
 }
 
 function doWhatItSays(input) {
     fs.readFile('./random.txt', "utf-8", (err, data) => {
         if (err) throw err;
-        console.log(data);
-      });
+        // console.log(data);
+        var dataArr = data.split(",");
+        whatToDo = dataArr[0];
+        userInput = dataArr[1];
+        spotifyThis();
+        // the fs needs to read what is in the file and parse it at the comma
+        // when it does so, the first part becomes process.argv[2]
+        // the second part becomes process.argv.slice(3). join(" ")
+        // somehow i have to get the terminal to understand that the .txt is an array? or an input?
+    });
 
 }
 
@@ -99,3 +126,6 @@ switch (whatToDo) {
         doWhatItSays(userInput);
         break;
 }
+
+// FINAL COMMENTS:
+// I would like to make the content log to the .txt file, which I can work on at a later time.
